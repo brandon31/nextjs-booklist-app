@@ -1,9 +1,12 @@
+import { Button } from "@radix-ui/themes";
 import React from "react";
 
 const Booklist = () => {
   return (
     <>
-      <h1>Booklist Page</h1>
+      <div>
+        <Button className="cursor-pointer">New Book</Button>
+      </div>
     </>
   );
 };
