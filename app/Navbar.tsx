@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
+import { usePathname } from "next/navigation";
 import { FaBookOpen } from "react-icons/fa";
+import classnames from "classnames";
 
 const Navbar = () => {
+  const currentPath = usePathname();
+
   const links = [
     { label: "Dashboard", href: "/" },
     { label: "Booklist", href: "/booklist" },
@@ -18,7 +24,11 @@ const Navbar = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="font-bold text-zinc-600 hover:text-zinc-900 transition-colors"
+              className={classnames({
+                "text-zinc-900": link.href === currentPath,
+                "text-zinc-500": link.href !== currentPath,
+                "hover:text-zinc-700 font-500 transition-colors": true,
+              })}
             >
               {link.label}
             </Link>
