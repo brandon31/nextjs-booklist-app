@@ -9,3 +9,10 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Booklist {
+  id     Int    @id @default(autoincrement())
+  title  String @db.VarChar(255)
+  author String @db.VarChar(255)
+  number Int
+}
