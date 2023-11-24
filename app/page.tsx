@@ -1,7 +1,9 @@
 export default function Home() {
   return (
     <>
-      <div>Hello, World!</div>
+      <div>
+        Hello, welcome to the <span className="font-bold">Booklist</span> app
+      </div>
     </>
   );
 }

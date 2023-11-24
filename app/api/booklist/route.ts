@@ -6,11 +6,13 @@ const prisma = new PrismaClient();
 const createBooklistSchema = z.object({
   title: z.string().min(1).max(255),
   author: z.string().min(1),
-  number: z.any(),
+  bookNumber: z.string().min(1).max(255),
 });
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
+
+  // console.log(body);
 
   const validation = createBooklistSchema.safeParse(body);
 
@@ -18,7 +20,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.errors, { status: 400 });
 
   const newBook = await prisma.booklist.create({
-    data: { title: body.title, author: body.author, number: body.number },
+    data: {
+      title: body.title,
+      author: body.author,
+      bookNumber: body.bookNumber,
+    },
   });
 
   return NextResponse.json(newBook, { status: 201 });
