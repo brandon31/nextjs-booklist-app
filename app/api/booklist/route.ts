@@ -12,8 +12,6 @@ const createBooklistSchema = z.object({
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  // console.log(body);
-
   const validation = createBooklistSchema.safeParse(body);
 
   if (!validation.success)
