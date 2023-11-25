@@ -9,7 +9,6 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import BookTable from "../components/BookTable";
@@ -23,6 +22,12 @@ const Booklist = () => {
 
   const [bookEntries, setBookEntries] = useState<Array<any>>([]);
   const [error, setError] = useState("");
+
+  function handleRemove(index: number) {
+    const updatedEntries = [...bookEntries];
+    updatedEntries.splice(index, 1);
+    setBookEntries(updatedEntries);
+  }
 
   const handleSubmit = async () => {
     try {
@@ -102,7 +107,7 @@ const Booklist = () => {
             </Flex>
           </Dialog.Content>
         </Dialog.Root>
-        <BookTable entries={bookEntries} />
+        <BookTable entries={bookEntries} onRemove={handleRemove} />
       </div>
     </>
   );
