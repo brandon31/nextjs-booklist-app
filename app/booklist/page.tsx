@@ -5,7 +5,6 @@ import {
   Callout,
   Dialog,
   Flex,
-  Table,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -13,21 +12,32 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import bookTable from "../components/bookTable";
+import BookTable from "../components/BookTable";
 
 const Booklist = () => {
   const router = useRouter();
+
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [bookNumber, setBookNumber] = useState<string>("");
 
-  const [values, setValues] = useState<[]>([]);
-
+  const [bookEntries, setBookEntries] = useState<Array<any>>([]);
   const [error, setError] = useState("");
+
   const handleSubmit = async () => {
     try {
       await axios.post("/api/booklist", { title, author, bookNumber });
       router.push("/booklist");
+
+      setBookEntries((prevEntries) => [
+        ...prevEntries,
+        { title, author, bookNumber },
+      ]);
+
+      // Clear input fields
+      setTitle("");
+      setAuthor("");
+      setBookNumber("");
     } catch (error) {
       setError("An unexpexted error occurred");
     }
@@ -92,11 +102,7 @@ const Booklist = () => {
             </Flex>
           </Dialog.Content>
         </Dialog.Root>
-        <bookTable
-          bookTitle={title}
-          bookAuthor={author}
-          bookDigits={bookNumber}
-        />
+        <BookTable entries={bookEntries} />
       </div>
     </>
   );
